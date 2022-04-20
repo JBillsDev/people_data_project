@@ -1,5 +1,7 @@
 package GUI;
 
+import org.tinylog.Logger;
+
 import javax.swing.*;
 
 public class JFrameWindow extends JFrame {
@@ -12,6 +14,7 @@ public class JFrameWindow extends JFrame {
         // Center the window, should be triggered after setting the size
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        Logger.info("JFrameWindow (" + windowTitle + ") initialized");
     }
 
 }

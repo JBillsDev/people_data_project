@@ -1,4 +1,12 @@
 
+		v0.0.0a
+	
+	- CODE -
+	
+[ADD] tinylog API/IMPL
+
+
+
 		V0.0.0
 	
 	- INTERFACE -
