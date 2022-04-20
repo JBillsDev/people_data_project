@@ -1,0 +1,18 @@
+
+		V0.0.0
+	
+	- INTERFACE -
+
+[ADD] Program Window
+[ADD] Window title with version number
+
+	- CODE -
+
+[ADD] class Main
+[ADD] package GUI
+[ADD] class GUI.JFrameWindow
+	
+	- MISC -
+
+[ADD] changelog.txt
+[ADD] pom.xml
