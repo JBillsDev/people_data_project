@@ -8,6 +8,9 @@ target/*
 *.log
 log.txt
 
+# Config file
+config.txt
+
 # BlueJ files
 *.ctxt
 

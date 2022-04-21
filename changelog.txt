@@ -1,4 +1,20 @@
 
+		v0.0.0b
+	
+	- INTERFACE -
+
+[ADD] Config file
+[ADD] Update config file when window is moved or resized
+[ADD] Delete config file to generate new one on launch
+
+	- CODE -
+	
+[ADD] org.json
+[ADD] package Utility
+[ADD] class Utility.Config
+
+
+	
 		v0.0.0a
 	
 	- CODE -
