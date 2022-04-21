@@ -1,4 +1,13 @@
 
+		v0.0.2
+	
+	- INTERFACE -
+
+[ADD] PersonEditor email entry
+[CHANGE] PersonEditor phone entry alignment
+
+
+
 		v0.0.1
 	
 	- INTERFACE -
