@@ -1,20 +1,53 @@
 package GUI;
 
+import Utility.Config;
 import org.tinylog.Logger;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
-public class JFrameWindow extends JFrame {
+final public class JFrameWindow extends JFrame  {
 
-    public JFrameWindow(String windowTitle, int windowWidth, int windowHeight) {
+    Config configReference;
+
+    public JFrameWindow(String windowTitle, Config configReference) {
+        this.configReference = configReference;
+
         this.setTitle(windowTitle);
-        this.setSize(windowWidth, windowHeight);
+        this.setBounds(this.configReference.getWindowRect());
         // Set the program to stop running when the window's 'X' is clicked
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // Center the window, should be triggered after setting the size
-        this.setLocationRelativeTo(null);
+
+        // Update config file when window is resized
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent event) {
+                super.componentResized(event);
+
+                configReference.updateWindowDimensions(event.getComponent().getWidth(),
+                                                       event.getComponent().getHeight());
+                configReference.updateWindowPosition(event.getComponent().getX(),
+                                                     event.getComponent().getY());
+                configReference.writeConfig();
+            }
+        });
+
+        // Update config file when window is moved
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentMoved(ComponentEvent event) {
+                super.componentMoved(event);
+
+                configReference.updateWindowDimensions(event.getComponent().getWidth(),
+                        event.getComponent().getHeight());
+                configReference.updateWindowPosition(event.getComponent().getX(),
+                        event.getComponent().getY());
+                configReference.writeConfig();
+            }
+        });
+
         this.setVisible(true);
         Logger.info("JFrameWindow (" + windowTitle + ") initialized");
     }
-
 }
