@@ -3,6 +3,8 @@ package GUI;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
@@ -34,6 +36,7 @@ final public class JPanelPersonEditor {
     String TEXT_LABEL_PHONE_NUMBER = "Number: ";
     String TEXT_LABEL_REGISTERED_FOR_UPDATES = "Register for Updates: ";
 
+    final private int NAME_LENGTH_MAX = 12;
 
     public JPanelPersonEditor() {
         this.panelRoot = new JPanel();
@@ -160,11 +163,35 @@ final public class JPanelPersonEditor {
         var panelNameBody = new JPanel();
         var labelPersonNameFirst = new JLabel(this.TEXT_LABEL_PERSON_NAME_FIRST);
         this.textFieldNameFirst = new JTextField(15);
+        // Prevent any characters other than letters and hyphen
+        this.textFieldNameFirst.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent event) {
+                char key = event.getKeyChar();
+                if (((key < 'a' || key > 'z') && (key < 'A' || key > 'Z') && (key != '-')) ||
+                        ((textFieldNameFirst.getText().length()) >= NAME_LENGTH_MAX)) {
+                    event.consume();
+                }
+            }
+        });
+
         panelNameBody.add(labelPersonNameFirst);
         panelNameBody.add(this.textFieldNameFirst);
 
         var labelPersonNameLast = new JLabel(this.TEXT_LABEL_PERSON_NAME_LAST);
         this.textFieldNameLast = new JTextField(15);
+        // Prevent any characters other than letters and hyphen
+        this.textFieldNameLast.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent event) {
+                char key = event.getKeyChar();
+                if (((key < 'a' || key > 'z') && (key < 'A' || key > 'Z') && (key != '-')) ||
+                        ((textFieldNameLast.getText().length()) >= NAME_LENGTH_MAX)) {
+                    event.consume();
+                }
+            }
+        });
+
         panelNameBody.add(labelPersonNameLast);
         panelNameBody.add(this.textFieldNameLast);
         panelName.add(panelNameBody);
@@ -185,14 +212,41 @@ final public class JPanelPersonEditor {
         panelPhoneTitle.add(Box.createHorizontalGlue());
         panelPhone.add(panelPhoneTitle);
 
+        // Create key adapted that only accepts numbers
+
         var panelPhoneBody = new JPanel();
         var labelPhoneAreaCode = new JLabel(this.TEXT_LABEL_PHONE_AREA_CODE);
         panelPhoneBody.add(labelPhoneAreaCode);
         this.textFieldPhoneAreaCode = new JTextField(3);
+        this.textFieldPhoneAreaCode.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent event) {
+                char c = event.getKeyChar();
+                if (((c < '0') || (c > '9')) || (textFieldPhoneAreaCode.getText().length() >= 3)) event.consume();
+            }
+        });
+
         panelPhoneBody.add(this.textFieldPhoneAreaCode);
         var labelPhoneNumber = new JLabel(this.TEXT_LABEL_PHONE_NUMBER);
         panelPhoneBody.add(labelPhoneNumber);
         this.textFieldPhoneNumber = new JTextField(8);
+        this.textFieldPhoneNumber.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent event) {
+                char c = event.getKeyChar();
+                String text = textFieldPhoneNumber.getText();
+                if (((c < '0') || (c > '9')) || (text.length() >= 8)) event.consume();
+
+                if (text.length() == 3) {
+                    textFieldPhoneNumber.setText(textFieldPhoneNumber.getText() + '-');
+                }
+
+                if ((event.getKeyChar() == '\b') && (text.length() == 4)) {
+                    textFieldPhoneNumber.setText(text.substring(0, 3));
+                }
+            }
+        });
+
         panelPhoneBody.add(this.textFieldPhoneNumber);
         panelPhone.add(panelPhoneBody);
 
@@ -204,6 +258,23 @@ final public class JPanelPersonEditor {
         panelFormSpacer.setPreferredSize(this.dimensionFormPanelSpacerPreferredSize);
 
         return panelFormSpacer;
+    }
+
+    private boolean isEmailValid() {
+        String text = this.textFieldEmailAddress.getText();
+        return ((text.length() >= 6) && (text.indexOf('@') != -1) && text.endsWith(".com"));
+    }
+
+    private boolean isNameValid() {
+        return ((this.textFieldNameFirst.getText().length() > 0) && (this.textFieldNameLast.getText().length() > 0));
+    }
+
+    private boolean isPhoneValid() {
+        return ((this.textFieldPhoneAreaCode.getText().length() > 0) && (this.textFieldPhoneNumber.getText().length() > 0));
+    }
+
+    private boolean isFormValid() {
+        return (this.isEmailValid() && this.isNameValid() && this.isPhoneValid());
     }
 
     public JPanel getPanelRoot() {

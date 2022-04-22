@@ -1,4 +1,23 @@
 
+		v0.0.3
+
+	- INTERFACE -
+
+[CHANGE] PersonEditor name fields only accept letters a hyphen
+[CHANGE] PersonEditor names are limited to 12 characters
+[CHANGE] PersonEditor area code is limited to 3 digits
+[CHANGE] PersonEditor phone number is limited to 7 digits and hyphen
+[CHANGE] PersonEditor phone number automatically adds and removes hyphen
+
+	- CODE -
+
+[ADD] PersonEditor check to ensure email isn't empty, and contains '@' and ends in '.com'
+[ADD] PersonEditor check to ensure name entries aren't empty
+[ADD] PersonEditor check to ensure phone number and area code are correct length
+[ADD] PersonEditor check to ensure form is correctly filled out
+
+
+
 		v0.0.2
 	
 	- INTERFACE -
