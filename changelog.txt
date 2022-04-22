@@ -1,4 +1,21 @@
 
+		v0.0.5
+	
+	- INTERFACE -
+
+[ADD] PersonEditor form submission button
+
+	- CODE -
+
+[CHANGE] PersonEditor renamed shorthand lambda e's to event
+[FIX] PersonEditor amended email check to require character(s) between' @' and '.com'
+[FIX] PersonEditor amended email to prevent spacebar
+[FIX] PersonEditor amended phone check to require exact number of digits for area code and number
+[FIX] PersonEditor amended phone check to prevent space bar from adding hyphen without 4th digit being entered
+[FIX] PersonEditor amended phone number entry to move caret to end of number when adding digit
+
+
+
 		v0.0.4
 
 	- CODE -

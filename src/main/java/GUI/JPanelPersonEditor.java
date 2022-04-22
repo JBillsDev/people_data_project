@@ -1,5 +1,7 @@
 package GUI;
 
+import org.tinylog.Logger;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -34,6 +36,8 @@ final public class JPanelPersonEditor {
         panelForm.add(this.createPanelPhoneNumber(dimensionFormPanelPreferredSize));
         panelForm.add(this.createFormPanelSpacer());
         panelForm.add(this.createPanelEmail(dimensionFormPanelPreferredSize));
+        panelForm.add(this.createFormPanelSpacer());
+        panelForm.add(this.createPanelFormSubmit(dimensionFormPanelPreferredSize));
 
         this.panelRoot.add(panelForm);
     }
@@ -66,7 +70,7 @@ final public class JPanelPersonEditor {
         final var labelDateOfBirthYear = new JLabel(TEXT_LABEL_BIRTHDATE_YEAR);
         panelBirthYear.add(labelDateOfBirthYear);
         this.comboBoxBirthYear.setRenderer(listRenderer);
-        this.comboBoxBirthYear.addActionListener(e -> updateDayOfMonth());
+        this.comboBoxBirthYear.addActionListener(event -> updateDayOfMonth());
         int yearCurrent = LocalDate.now().getYear();
         int yearEnd = yearCurrent - 120;
         for (int yearIter = yearCurrent; yearIter > yearEnd; --yearIter) {
@@ -78,7 +82,7 @@ final public class JPanelPersonEditor {
         final var panelBirthMonth = new JPanel();
         final var labelDateOfBirthMonth = new JLabel(TEXT_LABEL_BIRTHDATE_MONTH);
         panelBirthMonth.add(labelDateOfBirthMonth);
-        this.comboBoxBirthMonth.addActionListener(e -> updateDayOfMonth());
+        this.comboBoxBirthMonth.addActionListener(event -> updateDayOfMonth());
         this.comboBoxBirthMonth.setRenderer(listRenderer);
         this.comboBoxBirthMonth.addItem("Jan");
         this.comboBoxBirthMonth.addItem("Feb");
@@ -126,6 +130,15 @@ final public class JPanelPersonEditor {
         final var labelEmailAddress = new JLabel(TEXT_LABEL_EMAIL_ADDRESS);
         panelEmailBody.add(labelEmailAddress);
         panelEmailBody.add(this.textFieldEmailAddress);
+
+        this.textFieldEmailAddress.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent event) {
+                char newChar = event.getKeyChar();
+                if (newChar == ' ') event.consume();
+            }
+        });
+
         final var labelRegisterForUpdates = new JLabel(TEXT_LABEL_REGISTERED_FOR_UPDATES);
         panelEmailBody.add(labelRegisterForUpdates);
         this.checkBoxRegisteredForUpdates.setSelected(true);
@@ -133,6 +146,25 @@ final public class JPanelPersonEditor {
         panelEmail.add(panelEmailBody);
 
         return panelEmail;
+    }
+
+    private JPanel createPanelFormSubmit(Dimension dimensionFormPanelPreferredSizeReference) {
+        final String TEXT_BUTTON = "Submit";
+
+        final var panelFormSubmit = new JPanel();
+        panelFormSubmit.setPreferredSize(dimensionFormPanelPreferredSizeReference);
+        panelFormSubmit.setLayout(new BoxLayout(panelFormSubmit, BoxLayout.PAGE_AXIS));
+        panelFormSubmit.setBorder(new LineBorder(Color.BLACK));
+
+        final var panelFormSubmitBody = new JPanel();
+        final var buttonFormSubmit = new JButton(TEXT_BUTTON);
+
+        buttonFormSubmit.addActionListener(event -> this.submitForm());
+
+        panelFormSubmitBody.add(buttonFormSubmit);
+        panelFormSubmit.add(panelFormSubmitBody);
+
+        return panelFormSubmit;
     }
 
     private JPanel createPanelName(Dimension dimensionFormPanelPreferredSizeReference) {
@@ -231,14 +263,26 @@ final public class JPanelPersonEditor {
         this.textFieldPhoneNumber.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent event) {
+                // Set the caret to the end of the number before appending the new digit
+                textFieldPhoneNumber.setCaretPosition(textFieldPhoneNumber.getText().length());
+
                 final char c = event.getKeyChar();
+
+                // Prevent the space bar from adding the hyphen without entering 4th digit
+                if (c == ' ') {
+                    event.consume();
+                    return;
+                }
+
                 String text = textFieldPhoneNumber.getText();
                 if (((c < '0') || (c > '9')) || (text.length() >= 8)) event.consume();
 
+                // Add hyphen when the 4th digit is entered
                 if (text.length() == 3) {
                     textFieldPhoneNumber.setText(textFieldPhoneNumber.getText() + '-');
                 }
 
+                // Erase the hyphen along with the 4th digit of the string
                 if ((event.getKeyChar() == '\b') && (text.length() == 4)) {
                     textFieldPhoneNumber.setText(text.substring(0, 3));
                 }
@@ -262,7 +306,7 @@ final public class JPanelPersonEditor {
 
     private boolean isEmailValid() {
         String text = this.textFieldEmailAddress.getText();
-        return ((text.length() >= 6) && (text.indexOf('@') != -1) && text.endsWith(".com"));
+        return ((text.length() >= 6) && (text.indexOf('@') != -1) && text.endsWith(".com") && !text.endsWith("@.com"));
     }
 
     private boolean isNameValid() {
@@ -270,7 +314,7 @@ final public class JPanelPersonEditor {
     }
 
     private boolean isPhoneValid() {
-        return ((this.textFieldPhoneAreaCode.getText().length() > 0) && (this.textFieldPhoneNumber.getText().length() > 0));
+        return ((this.textFieldPhoneAreaCode.getText().length() == 3) && (this.textFieldPhoneNumber.getText().length() == 8));
     }
 
     private boolean isFormValid() {
@@ -279,6 +323,10 @@ final public class JPanelPersonEditor {
 
     public JPanel getPanelRoot() {
         return this.panelRoot;
+    }
+
+    private void submitForm() {
+        if (isFormValid()) Logger.info("Valid form");
     }
 
     // Update the day combo box to reflect the correct number of days for the currently selected month and year
