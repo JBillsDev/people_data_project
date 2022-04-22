@@ -1,4 +1,20 @@
 
+		v0.0.4
+
+	- CODE -
+
+[ADD] PersonEditor check to prevent crash during initialization
+[ADD] PersonEditor comments
+[CHANGE] Main converted a variable to final
+[CHANGE] Config moved several final variables to local scope
+[CHANGE] Config updated access modifiers for member variables
+[CHANGE] JFrameWindow changed members to local final variables
+[CHANGE] PersonEditor string literals moved to local scopes
+[CHANGE] PersonEditor changed scope of most variables
+[CHANGE] PersonEditor reorganized comments
+
+
+
 		v0.0.3
 
 	- INTERFACE -

@@ -10,73 +10,61 @@ import java.time.YearMonth;
 
 final public class JPanelPersonEditor {
 
-    JPanel panelRoot;
+    private final JPanel panelRoot;
 
-    JCheckBox checkBoxRegisteredForUpdates;
-    JComboBox<Integer> comboBoxBirthDay, comboBoxBirthYear;
-    JComboBox<String> comboBoxBirthMonth;
-    JTextField textFieldEmailAddress;
-    JTextField textFieldNameFirst, textFieldNameLast;
-    JTextField textFieldPhoneAreaCode, textFieldPhoneNumber;
-
-    Dimension dimensionFormPanelPreferredSize = new Dimension(440, 54);
-    Dimension dimensionFormPanelSpacerPreferredSize = new Dimension(440, 4);
-
-    String TEXT_LABEL_BIRTHDATE = "     Birthdate";
-    String TEXT_LABEL_BIRTHDATE_DAY = "Day: ";
-    String TEXT_LABEL_BIRTHDATE_MONTH = "Month: ";
-    String TEXT_LABEL_BIRTHDATE_YEAR = "Year: ";
-    String TEXT_LABEL_EMAIL_TITLE = "     Email Address";
-    String TEXT_LABEL_EMAIL_ADDRESS = "Email: ";
-    String TEXT_LABEL_PERSON_NAME = "     Name";
-    String TEXT_LABEL_PERSON_NAME_FIRST = "First:";
-    String TEXT_LABEL_PERSON_NAME_LAST = "Last:";
-    String TEXT_LABEL_PHONE_TITLE = "     Phone";
-    String TEXT_LABEL_PHONE_AREA_CODE = "Area Code: ";
-    String TEXT_LABEL_PHONE_NUMBER = "Number: ";
-    String TEXT_LABEL_REGISTERED_FOR_UPDATES = "Register for Updates: ";
-
-    final private int NAME_LENGTH_MAX = 12;
+    private final JCheckBox checkBoxRegisteredForUpdates = new JCheckBox();
+    private final JComboBox<Integer> comboBoxBirthDay = new JComboBox<>(), comboBoxBirthYear = new JComboBox<>();
+    private final JComboBox<String> comboBoxBirthMonth = new JComboBox<>();
+    private final JTextField textFieldEmailAddress = new JTextField(20);
+    private final JTextField textFieldNameFirst = new JTextField(15), textFieldNameLast = new JTextField(15);
+    private final JTextField textFieldPhoneAreaCode = new JTextField(3), textFieldPhoneNumber = new JTextField(8);
 
     public JPanelPersonEditor() {
+        final Dimension dimensionFormPanelPreferredSize = new Dimension(440, 54);
+
         this.panelRoot = new JPanel();
 
-        var panelForm = new JPanel();
+        final var panelForm = new JPanel();
         panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.PAGE_AXIS));
-        panelForm.add(this.createPanelName());
+
+        panelForm.add(this.createPanelName(dimensionFormPanelPreferredSize));
         panelForm.add(this.createFormPanelSpacer());
-        panelForm.add(this.createPanelDateOfBirth());
+        panelForm.add(this.createPanelDateOfBirth(dimensionFormPanelPreferredSize));
         panelForm.add(this.createFormPanelSpacer());
-        panelForm.add(this.createPanelPhoneNumber());
+        panelForm.add(this.createPanelPhoneNumber(dimensionFormPanelPreferredSize));
         panelForm.add(this.createFormPanelSpacer());
-        panelForm.add(this.createPanelEmail());
+        panelForm.add(this.createPanelEmail(dimensionFormPanelPreferredSize));
 
         this.panelRoot.add(panelForm);
     }
 
-    private JPanel createPanelDateOfBirth() {
-        var panelDateOfBirth = new JPanel();
-        panelDateOfBirth.setPreferredSize(this.dimensionFormPanelPreferredSize);
+    private JPanel createPanelDateOfBirth(Dimension dimensionFormPanelPreferredSizeReference) {
+        final String TEXT_LABEL_BIRTHDATE = "     Birthdate";
+        final String TEXT_LABEL_BIRTHDATE_DAY = "Day: ";
+        final String TEXT_LABEL_BIRTHDATE_MONTH = "Month: ";
+        final String TEXT_LABEL_BIRTHDATE_YEAR = "Year: ";
+
+        final var panelDateOfBirth = new JPanel();
+        panelDateOfBirth.setPreferredSize(dimensionFormPanelPreferredSizeReference);
         panelDateOfBirth.setLayout(new BoxLayout(panelDateOfBirth, BoxLayout.PAGE_AXIS));
         panelDateOfBirth.setBorder(new LineBorder(Color.BLACK));
 
-        var panelDateOfBirthTitle = new JPanel();
+        final var panelDateOfBirthTitle = new JPanel();
         panelDateOfBirthTitle.setLayout(new BoxLayout(panelDateOfBirthTitle, BoxLayout.LINE_AXIS));
-        var labelDateOfBirthTitle = new JLabel(this.TEXT_LABEL_BIRTHDATE);
+        final var labelDateOfBirthTitle = new JLabel(TEXT_LABEL_BIRTHDATE);
         panelDateOfBirthTitle.add(labelDateOfBirthTitle);
         panelDateOfBirthTitle.add(Box.createHorizontalGlue());
         panelDateOfBirth.add(panelDateOfBirthTitle);
 
-        var panelDateOfBirthBody = new JPanel();
+        final var panelDateOfBirthBody = new JPanel();
         panelDateOfBirthBody.setLayout(new BoxLayout(panelDateOfBirthBody, BoxLayout.LINE_AXIS));
 
-        var listRenderer = new DefaultListCellRenderer();
+        final var listRenderer = new DefaultListCellRenderer();
         listRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
 
-        var panelBirthYear = new JPanel();
-        var labelDateOfBirthYear = new JLabel(this.TEXT_LABEL_BIRTHDATE_YEAR);
+        final var panelBirthYear = new JPanel();
+        final var labelDateOfBirthYear = new JLabel(TEXT_LABEL_BIRTHDATE_YEAR);
         panelBirthYear.add(labelDateOfBirthYear);
-        this.comboBoxBirthYear = new JComboBox<>();
         this.comboBoxBirthYear.setRenderer(listRenderer);
         this.comboBoxBirthYear.addActionListener(e -> updateDayOfMonth());
         int yearCurrent = LocalDate.now().getYear();
@@ -87,10 +75,9 @@ final public class JPanelPersonEditor {
         panelBirthYear.add(this.comboBoxBirthYear);
         panelDateOfBirthBody.add(panelBirthYear);
 
-        var panelBirthMonth = new JPanel();
-        var labelDateOfBirthMonth = new JLabel(this.TEXT_LABEL_BIRTHDATE_MONTH);
+        final var panelBirthMonth = new JPanel();
+        final var labelDateOfBirthMonth = new JLabel(TEXT_LABEL_BIRTHDATE_MONTH);
         panelBirthMonth.add(labelDateOfBirthMonth);
-        this.comboBoxBirthMonth = new JComboBox<>();
         this.comboBoxBirthMonth.addActionListener(e -> updateDayOfMonth());
         this.comboBoxBirthMonth.setRenderer(listRenderer);
         this.comboBoxBirthMonth.addItem("Jan");
@@ -108,10 +95,9 @@ final public class JPanelPersonEditor {
         panelBirthMonth.add(this.comboBoxBirthMonth);
         panelDateOfBirthBody.add(panelBirthMonth);
 
-        var panelBirthDay = new JPanel();
-        var labelDateOfBirthDay = new JLabel(this.TEXT_LABEL_BIRTHDATE_DAY);
+        final var panelBirthDay = new JPanel();
+        final var labelDateOfBirthDay = new JLabel(TEXT_LABEL_BIRTHDATE_DAY);
         panelBirthDay.add(labelDateOfBirthDay);
-        this.comboBoxBirthDay = new JComboBox<>();
         this.comboBoxBirthDay.setRenderer(listRenderer);
         this.updateDayOfMonth();
         panelBirthDay.add(this.comboBoxBirthDay);
@@ -120,26 +106,28 @@ final public class JPanelPersonEditor {
         return panelDateOfBirth;
     }
 
-    private JPanel createPanelEmail() {
-        var panelEmail = new JPanel();
-        panelEmail.setPreferredSize(this.dimensionFormPanelPreferredSize);
+    private JPanel createPanelEmail(Dimension dimensionFormPanelPreferredSizeReference) {
+        final String TEXT_LABEL_EMAIL_TITLE = "     Email Address";
+        final String TEXT_LABEL_EMAIL_ADDRESS = "Email: ";
+        final String TEXT_LABEL_REGISTERED_FOR_UPDATES = "Register for Updates: ";
+
+        final var panelEmail = new JPanel();
+        panelEmail.setPreferredSize(dimensionFormPanelPreferredSizeReference);
         panelEmail.setLayout(new BoxLayout(panelEmail, BoxLayout.PAGE_AXIS));
         panelEmail.setBorder(new LineBorder(Color.BLACK));
 
-        var panelEmailTitle = new JPanel();
+        final var panelEmailTitle = new JPanel();
         panelEmailTitle.setLayout(new BoxLayout(panelEmailTitle, BoxLayout.LINE_AXIS));
-        var labelEmailTitle = new JLabel(this.TEXT_LABEL_EMAIL_TITLE);
+        final var labelEmailTitle = new JLabel(TEXT_LABEL_EMAIL_TITLE);
         panelEmailTitle.add(labelEmailTitle);
         panelEmailTitle.add(Box.createHorizontalGlue());
         panelEmail.add(panelEmailTitle);
-        var panelEmailBody = new JPanel();
-        var labelEmailAddress = new JLabel(this.TEXT_LABEL_EMAIL_ADDRESS);
+        final var panelEmailBody = new JPanel();
+        final var labelEmailAddress = new JLabel(TEXT_LABEL_EMAIL_ADDRESS);
         panelEmailBody.add(labelEmailAddress);
-        this.textFieldEmailAddress = new JTextField(20);
         panelEmailBody.add(this.textFieldEmailAddress);
-        var labelRegisterForUpdates = new JLabel(this.TEXT_LABEL_REGISTERED_FOR_UPDATES);
+        final var labelRegisterForUpdates = new JLabel(TEXT_LABEL_REGISTERED_FOR_UPDATES);
         panelEmailBody.add(labelRegisterForUpdates);
-        this.checkBoxRegisteredForUpdates = new JCheckBox();
         this.checkBoxRegisteredForUpdates.setSelected(true);
         panelEmailBody.add(this.checkBoxRegisteredForUpdates);
         panelEmail.add(panelEmailBody);
@@ -147,27 +135,33 @@ final public class JPanelPersonEditor {
         return panelEmail;
     }
 
-    private JPanel createPanelName() {
-        var panelName = new JPanel();
-        panelName.setPreferredSize(this.dimensionFormPanelPreferredSize);
+    private JPanel createPanelName(Dimension dimensionFormPanelPreferredSizeReference) {
+        final int NAME_LENGTH_MAX = 12;
+
+        final String TEXT_LABEL_PERSON_NAME = "     Name";
+        final String TEXT_LABEL_PERSON_NAME_FIRST = "First:";
+        final String TEXT_LABEL_PERSON_NAME_LAST = "Last:";
+
+        final var panelName = new JPanel();
+        panelName.setPreferredSize(dimensionFormPanelPreferredSizeReference);
         panelName.setLayout(new BoxLayout(panelName, BoxLayout.PAGE_AXIS));
         panelName.setBorder(new LineBorder(Color.BLACK));
 
-        var panelNameTitle = new JPanel();
+        final var panelNameTitle = new JPanel();
         panelNameTitle.setLayout(new BoxLayout(panelNameTitle, BoxLayout.LINE_AXIS));
-        var labelNameTitle = new JLabel(this.TEXT_LABEL_PERSON_NAME);
+        final var labelNameTitle = new JLabel(TEXT_LABEL_PERSON_NAME);
         panelNameTitle.add(labelNameTitle);
         panelNameTitle.add(Box.createHorizontalGlue());
         panelName.add(panelNameTitle);
 
-        var panelNameBody = new JPanel();
-        var labelPersonNameFirst = new JLabel(this.TEXT_LABEL_PERSON_NAME_FIRST);
-        this.textFieldNameFirst = new JTextField(15);
+        final var panelNameBody = new JPanel();
+        final var labelPersonNameFirst = new JLabel(TEXT_LABEL_PERSON_NAME_FIRST);
+
         // Prevent any characters other than letters and hyphen
         this.textFieldNameFirst.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent event) {
-                char key = event.getKeyChar();
+                final char key = event.getKeyChar();
                 if (((key < 'a' || key > 'z') && (key < 'A' || key > 'Z') && (key != '-')) ||
                         ((textFieldNameFirst.getText().length()) >= NAME_LENGTH_MAX)) {
                     event.consume();
@@ -178,13 +172,13 @@ final public class JPanelPersonEditor {
         panelNameBody.add(labelPersonNameFirst);
         panelNameBody.add(this.textFieldNameFirst);
 
-        var labelPersonNameLast = new JLabel(this.TEXT_LABEL_PERSON_NAME_LAST);
-        this.textFieldNameLast = new JTextField(15);
+        final var labelPersonNameLast = new JLabel(TEXT_LABEL_PERSON_NAME_LAST);
+
         // Prevent any characters other than letters and hyphen
         this.textFieldNameLast.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent event) {
-                char key = event.getKeyChar();
+                final char key = event.getKeyChar();
                 if (((key < 'a' || key > 'z') && (key < 'A' || key > 'Z') && (key != '-')) ||
                         ((textFieldNameLast.getText().length()) >= NAME_LENGTH_MAX)) {
                     event.consume();
@@ -199,25 +193,28 @@ final public class JPanelPersonEditor {
         return panelName;
     }
 
-    private JPanel createPanelPhoneNumber() {
-        var panelPhone = new JPanel();
-        panelPhone.setPreferredSize(this.dimensionFormPanelPreferredSize);
+    private JPanel createPanelPhoneNumber(Dimension dimensionFormPanelPreferredSizeReference) {
+        final String TEXT_LABEL_PHONE_TITLE = "     Phone";
+        final String TEXT_LABEL_PHONE_AREA_CODE = "Area Code: ";
+        final String TEXT_LABEL_PHONE_NUMBER = "Number: ";
+
+        final var panelPhone = new JPanel();
+        panelPhone.setPreferredSize(dimensionFormPanelPreferredSizeReference);
         panelPhone.setLayout(new BoxLayout(panelPhone, BoxLayout.PAGE_AXIS));
         panelPhone.setBorder(new LineBorder(Color.BLACK));
 
-        var panelPhoneTitle = new JPanel();
+        final var panelPhoneTitle = new JPanel();
         panelPhoneTitle.setLayout(new BoxLayout(panelPhoneTitle, BoxLayout.LINE_AXIS));
-        var labelPhoneNumberTitle = new JLabel(this.TEXT_LABEL_PHONE_TITLE);
+        final var labelPhoneNumberTitle = new JLabel(TEXT_LABEL_PHONE_TITLE);
         panelPhoneTitle.add(labelPhoneNumberTitle);
         panelPhoneTitle.add(Box.createHorizontalGlue());
         panelPhone.add(panelPhoneTitle);
 
-        // Create key adapted that only accepts numbers
-
-        var panelPhoneBody = new JPanel();
-        var labelPhoneAreaCode = new JLabel(this.TEXT_LABEL_PHONE_AREA_CODE);
+        final var panelPhoneBody = new JPanel();
+        final var labelPhoneAreaCode = new JLabel(TEXT_LABEL_PHONE_AREA_CODE);
         panelPhoneBody.add(labelPhoneAreaCode);
-        this.textFieldPhoneAreaCode = new JTextField(3);
+
+        // Create key adapted that only accepts numbers
         this.textFieldPhoneAreaCode.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent event) {
@@ -227,13 +224,14 @@ final public class JPanelPersonEditor {
         });
 
         panelPhoneBody.add(this.textFieldPhoneAreaCode);
-        var labelPhoneNumber = new JLabel(this.TEXT_LABEL_PHONE_NUMBER);
+        final var labelPhoneNumber = new JLabel(TEXT_LABEL_PHONE_NUMBER);
         panelPhoneBody.add(labelPhoneNumber);
-        this.textFieldPhoneNumber = new JTextField(8);
+
+        // Create key adapted that only accepts numbers, and adds and removes the hyphen in phone number
         this.textFieldPhoneNumber.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent event) {
-                char c = event.getKeyChar();
+                final char c = event.getKeyChar();
                 String text = textFieldPhoneNumber.getText();
                 if (((c < '0') || (c > '9')) || (text.length() >= 8)) event.consume();
 
@@ -254,8 +252,10 @@ final public class JPanelPersonEditor {
     }
 
     private JPanel createFormPanelSpacer() {
-        var panelFormSpacer = new JPanel();
-        panelFormSpacer.setPreferredSize(this.dimensionFormPanelSpacerPreferredSize);
+        final Dimension dimensionFormPanelSpacerPreferredSize = new Dimension(440, 4);
+
+        final var panelFormSpacer = new JPanel();
+        panelFormSpacer.setPreferredSize(dimensionFormPanelSpacerPreferredSize);
 
         return panelFormSpacer;
     }
@@ -281,17 +281,19 @@ final public class JPanelPersonEditor {
         return this.panelRoot;
     }
 
+    // Update the day combo box to reflect the correct number of days for the currently selected month and year
     private void updateDayOfMonth() {
-        if (this.comboBoxBirthDay == null) {
-            return;
+        // Prevent crash before the combo boxes for birthdate are all initialized
+        if ((this.comboBoxBirthMonth.getItemCount() < 1) || (this.comboBoxBirthYear.getItemCount() < 1)) return;
+
+        if (this.comboBoxBirthDay.getItemCount() > 0) {
+            this.comboBoxBirthDay.removeAllItems();
         }
 
-        int currentSelection = this.comboBoxBirthDay.getSelectedIndex();
+        final int currentSelection = this.comboBoxBirthDay.getSelectedIndex();
 
-        this.comboBoxBirthDay.removeAllItems();
-
-        var yearMonthObject = YearMonth.of(Integer.parseInt(String.valueOf(this.comboBoxBirthYear.getSelectedItem())), this.comboBoxBirthMonth.getSelectedIndex() + 1);
-        int dayEnd = yearMonthObject.lengthOfMonth();
+        final var yearMonthObject = YearMonth.of(Integer.parseInt(String.valueOf(this.comboBoxBirthYear.getSelectedItem())), this.comboBoxBirthMonth.getSelectedIndex() + 1);
+        final int dayEnd = yearMonthObject.lengthOfMonth();
         for (int dayIter = 1; dayIter <= dayEnd; ++dayIter) {
             this.comboBoxBirthDay.addItem(dayIter);
         }
