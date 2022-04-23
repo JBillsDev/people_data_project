@@ -13,7 +13,7 @@ final public class JFrameWindow extends JFrame  {
     public JFrameWindow(String windowTitle, Config configReference) {
         final var config = configReference;
 
-        final Dimension dimensionWindowMinimumSize = new Dimension(480, 480);
+        final Dimension dimensionWindowMinimumSize = new Dimension(480, 335);
 
         this.setTitle(windowTitle);
         this.setMinimumSize(dimensionWindowMinimumSize);

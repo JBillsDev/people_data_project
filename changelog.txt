@@ -1,4 +1,12 @@
 
+		v0.0.7
+	
+	- INTERFACE -
+
+[CHANGE] Window minimum size
+
+
+
 		v0.0.6
 	
 	- INTERFACE -
