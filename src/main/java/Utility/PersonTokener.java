@@ -52,7 +52,7 @@ public class PersonTokener {
         return person;
     }
 
-    public static String personToJson(Person person) {
+    public static JSONObject personToJson(Person person) {
         final var jsonObjectPerson = new JSONObject();
 
         final var jsonObjectPersonName = new JSONObject();
@@ -79,7 +79,7 @@ public class PersonTokener {
 
         final var jsonObject = new JSONObject();
         jsonObject.put(JSON_OBJECT_KEY, jsonObjectPerson);
-        return jsonObject.toString(3);
+        return jsonObject;
     }
 
 }

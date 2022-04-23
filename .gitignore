@@ -11,6 +11,9 @@ log.txt
 # Config file
 config.txt
 
+# JSON files
+*.json
+
 # BlueJ files
 *.ctxt
 

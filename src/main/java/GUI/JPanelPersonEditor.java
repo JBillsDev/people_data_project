@@ -2,8 +2,6 @@ package GUI;
 
 import Data.LiveData;
 import Data.Person;
-import Utility.PersonTokener;
-import org.tinylog.Logger;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -426,20 +424,19 @@ final public class JPanelPersonEditor {
         // Create person from form
         var person = this.createPersonFromForm();
 
-
-        Logger.info(person.toString());
-        String json = PersonTokener.personToJson(person);
-        Logger.info(json);
-
-        Person person2 = PersonTokener.personFromJson(json);
-        Logger.info(person2.toString());
-
-
         // Add newly created person to the live database and the person-selector combo box
         LiveData.addPerson(person);
         this.comboBoxPersonAdd(person);
 
         this.formClear();
+    }
+
+    // Populate ComboBoxPerson with people in LiveData
+    public void generatePersonEditorListing() {
+        final var personListing = LiveData.getPersonListing();
+        for (String s : personListing) {
+            this.comboBoxPerson.addItem(s);
+        }
     }
 
     public JPanel getPanelRoot() {

@@ -1,4 +1,14 @@
 
+		v0.0.16
+	
+	- CODE -
+
+[ADD] MenuBar File Save saves LiveData to json file
+[ADD] MenuBar File Load clears current LiveData and PersonEditor listings, then loads from json file
+[ADD] PersonEditor generatePersonEditorListing
+
+
+
 		v0.0.15
 	
 	- INTERFACE -

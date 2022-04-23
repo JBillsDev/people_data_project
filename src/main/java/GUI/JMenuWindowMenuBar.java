@@ -24,9 +24,17 @@ final public class JMenuWindowMenuBar extends JMenuBar {
         menuFile.addSeparator();
 
         final var menuFileSave = new JMenuItem(TEXT_MENU_FILE_SAVE);
+        menuFileSave.addActionListener(event -> LiveData.save());
         menuFile.add(menuFileSave);
 
         final var menuFileLoad = new JMenuItem(TEXT_MENU_FILE_LOAD);
+        menuFileLoad.addActionListener(event -> {
+            jPanelPersonEditorReference.clearAll();
+            LiveData.clearData();
+
+            LiveData.load();
+            jPanelPersonEditorReference.generatePersonEditorListing();
+        });
         menuFile.add(menuFileLoad);
 
         menuFile.addSeparator();
