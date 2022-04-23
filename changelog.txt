@@ -1,4 +1,19 @@
 
+		v0.0.6
+	
+	- INTERFACE -
+
+[ADD] PersonEditor form clears when successfully submitted
+	
+	- CODE -
+
+[ADD] Person getters and setters
+[ADD] PersonEditor create instance of Person when form successfully submitted
+[ADD] Data package
+[CHANGE] Person moved to package Data
+
+
+
 		v0.0.5
 	
 	- INTERFACE -
@@ -71,7 +86,7 @@
 		
 	- CODE -
 
-[ADD] Person pojo
+[ADD] Data.Person pojo
 [ADD] PersonEditor DOB day respects valid dates of calendar years
 
 

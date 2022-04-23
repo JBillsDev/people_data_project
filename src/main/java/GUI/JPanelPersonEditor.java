@@ -1,5 +1,6 @@
 package GUI;
 
+import Data.Person;
 import org.tinylog.Logger;
 
 import javax.swing.*;
@@ -159,7 +160,7 @@ final public class JPanelPersonEditor {
         final var panelFormSubmitBody = new JPanel();
         final var buttonFormSubmit = new JButton(TEXT_BUTTON);
 
-        buttonFormSubmit.addActionListener(event -> this.submitForm());
+        buttonFormSubmit.addActionListener(event -> this.formSubmit());
 
         panelFormSubmitBody.add(buttonFormSubmit);
         panelFormSubmit.add(panelFormSubmitBody);
@@ -304,6 +305,39 @@ final public class JPanelPersonEditor {
         return panelFormSpacer;
     }
 
+    private void formClear() {
+        this.textFieldNameFirst.setText("");
+        this.textFieldNameLast.setText("");
+
+        this.comboBoxBirthYear.setSelectedIndex(0);
+        this.comboBoxBirthMonth.setSelectedIndex(0);
+        this.comboBoxBirthDay.setSelectedIndex(0);
+        this.updateDayOfMonth();
+
+        this.textFieldPhoneAreaCode.setText("");
+        this.textFieldPhoneNumber.setText("");
+        this.textFieldEmailAddress.setText("");
+        this.checkBoxRegisteredForUpdates.setSelected(true);
+    }
+
+    private void formSubmit() {
+        if (!isFormValid()) return;
+
+        // Create person from form
+        var person = new Person();
+        person.setName(this.textFieldNameFirst.getText(), this.textFieldNameLast.getText());
+        person.setBirthDate(Integer.parseInt(String.valueOf(this.comboBoxBirthDay.getSelectedItem())),
+                this.comboBoxBirthMonth.getSelectedIndex() + 1,
+                Integer.parseInt(String.valueOf(this.comboBoxBirthYear.getSelectedItem())));
+        person.setPhone(this.textFieldPhoneAreaCode.getText(), this.textFieldPhoneNumber.getText());
+        person.setEmailAddress(this.textFieldEmailAddress.getText());
+        person.setRegisteredForUpdates(this.checkBoxRegisteredForUpdates.isSelected());
+
+        Logger.info(person.toString());
+
+        this.formClear();
+    }
+
     private boolean isEmailValid() {
         String text = this.textFieldEmailAddress.getText();
         return ((text.length() >= 6) && (text.indexOf('@') != -1) && text.endsWith(".com") && !text.endsWith("@.com"));
@@ -323,10 +357,6 @@ final public class JPanelPersonEditor {
 
     public JPanel getPanelRoot() {
         return this.panelRoot;
-    }
-
-    private void submitForm() {
-        if (isFormValid()) Logger.info("Valid form");
     }
 
     // Update the day combo box to reflect the correct number of days for the currently selected month and year
