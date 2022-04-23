@@ -1,4 +1,16 @@
 
+		v0.0.10
+	
+	- CODE -
+
+[ADD] LiveData singleton class storing data during program lifetime
+[ADD] LiveData personArray
+[ADD] LiveData personArray addPerson
+[ADD] LiveData personArray getPersonCount
+[ADD] LiveData personArray getPerson
+
+
+
 		v0.0.9
 	
 	- CODE -

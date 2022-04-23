@@ -1,5 +1,6 @@
 package GUI;
 
+import Data.LiveData;
 import Data.Person;
 import Utility.PersonTokener;
 import org.tinylog.Logger;
@@ -334,12 +335,20 @@ final public class JPanelPersonEditor {
         person.setEmailAddress(this.textFieldEmailAddress.getText());
         person.setRegisteredForUpdates(this.checkBoxRegisteredForUpdates.isSelected());
 
+
         Logger.info(person.toString());
         String json = PersonTokener.personToJson(person);
         Logger.info(json);
 
         Person person2 = PersonTokener.personFromJson(json);
         Logger.info(person2.toString());
+
+        LiveData.addPerson(person);
+        Logger.info("LiveData count:" + LiveData.getPersonCount());
+        for(int iter = 0; iter < LiveData.getPersonCount(); ++iter) {
+            Logger.info(LiveData.getPersonAt(iter));
+        }
+
 
         this.formClear();
     }
