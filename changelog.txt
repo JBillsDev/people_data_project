@@ -1,4 +1,13 @@
 
+		v0.0.12
+		
+	- INTERFACE -
+
+[ADD] PersonEditor person selector combo box
+[ADD] PersonEditor personSelector sorts alphabetically
+
+
+
 		v0.0.11
 	
 	- INTERFACE -

@@ -15,11 +15,14 @@ import java.time.YearMonth;
 
 final public class JPanelPersonEditor {
 
+    final int NAME_LENGTH_MAX = 12;
+
     private final JPanel panelRoot;
 
     private final JCheckBox checkBoxRegisteredForUpdates = new JCheckBox();
     private final JComboBox<Integer> comboBoxBirthDay = new JComboBox<>(), comboBoxBirthYear = new JComboBox<>();
     private final JComboBox<String> comboBoxBirthMonth = new JComboBox<>(), comboBoxPhoneType = new JComboBox<>();
+    private final JComboBox<String> comboBoxPerson = new JComboBox<>();
     private final JTextField textFieldEmailAddress = new JTextField(20);
     private final JTextField textFieldNameFirst = new JTextField(15), textFieldNameLast = new JTextField(15);
     private final JTextField textFieldPhoneAreaCode = new JTextField(3), textFieldPhoneNumber = new JTextField(8);
@@ -43,6 +46,19 @@ final public class JPanelPersonEditor {
         panelForm.add(this.createPanelFormSubmit(dimensionFormPanelPreferredSize));
 
         this.panelRoot.add(panelForm);
+    }
+
+    private void comboBoxPersonAdd(Person person) {
+        final int comboBoxSize = this.comboBoxPerson.getItemCount();
+        final String newItem = (person.getNameLast() + ", " + person.getNameFirst());
+        for (int iter = 1; iter < comboBoxSize; ++iter) {
+            if (this.comboBoxPerson.getItemAt(iter).compareTo(newItem) > 0) {
+                this.comboBoxPerson.insertItemAt(newItem, iter);
+                return;
+            }
+        }
+
+        this.comboBoxPerson.addItem(newItem);
     }
 
     private JPanel createPanelDateOfBirth(Dimension dimensionFormPanelPreferredSizeReference) {
@@ -160,19 +176,25 @@ final public class JPanelPersonEditor {
         panelFormSubmit.setBorder(new LineBorder(Color.BLACK));
 
         final var panelFormSubmitBody = new JPanel();
+        StringBuilder stringBuilderEmptySelection = new StringBuilder();
+
+        // Set the width of the person combo box by creating string of max name size, plus a comma and space
+        final int MAX_COMBO_BOX_LENGTH = (this.NAME_LENGTH_MAX * 2) + 2;
+        stringBuilderEmptySelection.append("Select a person");
+        stringBuilderEmptySelection.append(" ".repeat(Math.max(0, MAX_COMBO_BOX_LENGTH - stringBuilderEmptySelection.length())));
+
+        this.comboBoxPerson.addItem(stringBuilderEmptySelection.toString());
+        panelFormSubmitBody.add(this.comboBoxPerson);
+
         final var buttonFormSubmit = new JButton(TEXT_BUTTON);
-
         buttonFormSubmit.addActionListener(event -> this.formSubmit());
-
         panelFormSubmitBody.add(buttonFormSubmit);
-        panelFormSubmit.add(panelFormSubmitBody);
 
+        panelFormSubmit.add(panelFormSubmitBody);
         return panelFormSubmit;
     }
 
     private JPanel createPanelName(Dimension dimensionFormPanelPreferredSizeReference) {
-        final int NAME_LENGTH_MAX = 12;
-
         final String TEXT_LABEL_PERSON_NAME = "     Name";
         final String TEXT_LABEL_PERSON_NAME_FIRST = "First:";
         final String TEXT_LABEL_PERSON_NAME_LAST = "Last:";
@@ -353,12 +375,9 @@ final public class JPanelPersonEditor {
         Person person2 = PersonTokener.personFromJson(json);
         Logger.info(person2.toString());
 
+        // Add newly created person to the live database and the person-selector combo box
         LiveData.addPerson(person);
-        Logger.info("LiveData count:" + LiveData.getPersonCount());
-        for(int iter = 0; iter < LiveData.getPersonCount(); ++iter) {
-            Logger.info(LiveData.getPersonAt(iter));
-        }
-
+        this.comboBoxPersonAdd(person);
 
         this.formClear();
     }
