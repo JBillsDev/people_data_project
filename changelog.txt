@@ -1,4 +1,14 @@
 
+		v0.0.9
+	
+	- CODE -
+
+[ADD] PeopleTokener convert person from JSON
+[CHANGE] PeopleTokener made local vars final
+[CHANGE] PeopleTokener renamed to PersonTokener
+
+
+
 		v0.0.8
 	
 	- CODE -

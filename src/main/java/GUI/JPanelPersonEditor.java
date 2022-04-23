@@ -1,7 +1,7 @@
 package GUI;
 
 import Data.Person;
-import Utility.PeopleTokener;
+import Utility.PersonTokener;
 import org.tinylog.Logger;
 
 import javax.swing.*;
@@ -335,8 +335,11 @@ final public class JPanelPersonEditor {
         person.setRegisteredForUpdates(this.checkBoxRegisteredForUpdates.isSelected());
 
         Logger.info(person.toString());
-        String json = PeopleTokener.personToJson(person);
+        String json = PersonTokener.personToJson(person);
         Logger.info(json);
+
+        Person person2 = PersonTokener.personFromJson(json);
+        Logger.info(person2.toString());
 
         this.formClear();
     }
