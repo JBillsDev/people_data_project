@@ -21,8 +21,20 @@ final public class Person {
 
     }
 
+    public Person(Person person) {
+        this.setName(person.nameFirst, person.nameLast);
+        this.setBirthDate(person.birthDay, person.birthMonth, person.birthYear);
+        this.setPhone(person.phoneType, person.phoneAreaCode, person.phoneNumber);
+        this.setEmailAddress(person.emailAddress);
+        this.setRegisteredForUpdates(person.registeredForUpdates);
+    }
+
     public static String createNameEntry(Person person) {
-        return (person.getNameLast() + ", " + person.getNameFirst());
+        return createNameEntry(person.nameFirst, person.nameLast);
+    }
+
+    public static String createNameEntry(String nameFirst, String nameLast) {
+        return (nameLast + ", " + nameFirst);
     }
 
     public int getBirthDay() {

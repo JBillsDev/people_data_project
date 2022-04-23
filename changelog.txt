@@ -1,4 +1,19 @@
 
+		v0.0.14
+	
+	- INTERFACE -
+
+[ADD] PersonEditor Update button
+[CHANGE] PersonEditor moved Submit button left of person selector
+
+	- CODE -
+
+[ADD] LiveData updatePersonAt
+[ADD] Person copy constructor
+[ADD] PersonEditor createPersonFromForm
+
+
+
 		v0.0.13
 	
 	- INTERFACE -

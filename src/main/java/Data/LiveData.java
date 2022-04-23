@@ -24,14 +24,21 @@ public class LiveData {
         INSTANCE.personArray.add(person);
     }
 
+    public static Person getPersonAt(int index) {
+        return (index < INSTANCE.personArray.size()) ? INSTANCE.personArray.get(index) : null;
+    }
+
     public static void removePersonAt(int index) {
         if (index >= INSTANCE.personArray.size()) return;
 
         INSTANCE.personArray.remove(index);
     }
 
-    public static Person getPersonAt(int index) {
-        return (index < INSTANCE.personArray.size()) ? INSTANCE.personArray.get(index) : null;
+    public static void updatePersonAt(int index, Person person) {
+        if (index >= INSTANCE.personArray.size()) return;
+
+        INSTANCE.personArray.remove(index);
+        addPerson(person);
     }
 
 }

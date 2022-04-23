@@ -19,7 +19,7 @@ final public class JPanelPersonEditor {
 
     private final JPanel panelRoot;
 
-    private final JButton buttonPersonSelectorDelete = new JButton();
+    private final JButton buttonPersonSelectorDelete = new JButton(), buttonPersonSelectorUpdate = new JButton();
     private final JCheckBox checkBoxRegisteredForUpdates = new JCheckBox();
     private final JComboBox<Integer> comboBoxBirthDay = new JComboBox<>(), comboBoxBirthYear = new JComboBox<>();
     private final JComboBox<String> comboBoxBirthMonth = new JComboBox<>(), comboBoxPhoneType = new JComboBox<>();
@@ -169,16 +169,21 @@ final public class JPanelPersonEditor {
     }
 
     private JPanel createPanelFormSubmit(Dimension dimensionFormPanelPreferredSizeReference) {
-        final String TEXT_BUTTON_SUBMIT = "Submit";
         final String TEXT_BUTTON_DELETE = "Delete";
+        final String TEXT_BUTTON_SUBMIT = "Submit";
+        final String TEXT_BUTTON_UPDATE = "Update";
 
         final var panelFormSubmit = new JPanel();
         panelFormSubmit.setPreferredSize(dimensionFormPanelPreferredSizeReference);
-        panelFormSubmit.setLayout(new BoxLayout(panelFormSubmit, BoxLayout.PAGE_AXIS));
         panelFormSubmit.setBorder(new LineBorder(Color.BLACK));
 
         final var panelFormSubmitBody = new JPanel();
+        panelFormSubmitBody.setAlignmentY(JPanel.CENTER_ALIGNMENT);
         StringBuilder stringBuilderEmptySelection = new StringBuilder();
+
+        final var buttonFormSubmit = new JButton(TEXT_BUTTON_SUBMIT);
+        buttonFormSubmit.addActionListener(event -> this.formSubmit());
+        panelFormSubmitBody.add(buttonFormSubmit);
 
         // Set the width of the person combo box by creating string of max name size, plus a comma and space
         final int MAX_COMBO_BOX_LENGTH = (this.NAME_LENGTH_MAX * 2) + 2;
@@ -188,6 +193,7 @@ final public class JPanelPersonEditor {
         this.comboBoxPerson.addItem(stringBuilderEmptySelection.toString());
         this.comboBoxPerson.addActionListener(event -> {
             buttonPersonSelectorDelete.setEnabled(comboBoxPerson.getSelectedIndex() != 0);
+            buttonPersonSelectorUpdate.setEnabled(comboBoxPerson.getSelectedIndex() != 0);
             if (comboBoxPerson.getSelectedIndex() != 0) {
                 fillFormForPersonAt(comboBoxPerson.getSelectedIndex() - 1);
             }
@@ -197,14 +203,15 @@ final public class JPanelPersonEditor {
         });
         panelFormSubmitBody.add(this.comboBoxPerson);
 
-        final var buttonFormSubmit = new JButton(TEXT_BUTTON_SUBMIT);
-        buttonFormSubmit.addActionListener(event -> this.formSubmit());
-        panelFormSubmitBody.add(buttonFormSubmit);
-
         this.buttonPersonSelectorDelete.setText(TEXT_BUTTON_DELETE);
         this.buttonPersonSelectorDelete.addActionListener(event -> this.personSelectorDelete());
         this.buttonPersonSelectorDelete.setEnabled(false);
         panelFormSubmitBody.add(this.buttonPersonSelectorDelete);
+
+        this.buttonPersonSelectorUpdate.setText(TEXT_BUTTON_UPDATE);
+        this.buttonPersonSelectorUpdate.addActionListener(event -> this.personSelectorUpdate());
+        this.buttonPersonSelectorUpdate.setEnabled(false);
+        panelFormSubmitBody.add(this.buttonPersonSelectorUpdate);
 
         panelFormSubmit.add(panelFormSubmitBody);
         return panelFormSubmit;
@@ -353,8 +360,22 @@ final public class JPanelPersonEditor {
         return panelFormSpacer;
     }
 
+    private Person createPersonFromForm() {
+        final var person = new Person();
+        person.setName(this.textFieldNameFirst.getText(), this.textFieldNameLast.getText());
+        person.setBirthDate(Integer.parseInt(String.valueOf(this.comboBoxBirthDay.getSelectedItem())),
+                this.comboBoxBirthMonth.getSelectedIndex() + 1,
+                Integer.parseInt(String.valueOf(this.comboBoxBirthYear.getSelectedItem())));
+        person.setPhone(this.comboBoxPhoneType.getItemAt(this.comboBoxPhoneType.getSelectedIndex()),
+                this.textFieldPhoneAreaCode.getText(), this.textFieldPhoneNumber.getText());
+        person.setEmailAddress(this.textFieldEmailAddress.getText());
+        person.setRegisteredForUpdates(this.checkBoxRegisteredForUpdates.isSelected());
+
+        return person;
+    }
+
     private void fillFormForPersonAt(int index) {
-        final var person = LiveData.getPersonAt(index);
+        var person = LiveData.getPersonAt(index);
         if (person == null) return;
 
         this.textFieldNameFirst.setText(person.getNameFirst());
@@ -392,15 +413,7 @@ final public class JPanelPersonEditor {
         if (!isFormValid()) return;
 
         // Create person from form
-        var person = new Person();
-        person.setName(this.textFieldNameFirst.getText(), this.textFieldNameLast.getText());
-        person.setBirthDate(Integer.parseInt(String.valueOf(this.comboBoxBirthDay.getSelectedItem())),
-                this.comboBoxBirthMonth.getSelectedIndex() + 1,
-                Integer.parseInt(String.valueOf(this.comboBoxBirthYear.getSelectedItem())));
-        person.setPhone(this.comboBoxPhoneType.getItemAt(this.comboBoxPhoneType.getSelectedIndex()),
-                        this.textFieldPhoneAreaCode.getText(), this.textFieldPhoneNumber.getText());
-        person.setEmailAddress(this.textFieldEmailAddress.getText());
-        person.setRegisteredForUpdates(this.checkBoxRegisteredForUpdates.isSelected());
+        var person = this.createPersonFromForm();
 
 
         Logger.info(person.toString());
@@ -409,6 +422,7 @@ final public class JPanelPersonEditor {
 
         Person person2 = PersonTokener.personFromJson(json);
         Logger.info(person2.toString());
+
 
         // Add newly created person to the live database and the person-selector combo box
         LiveData.addPerson(person);
@@ -446,6 +460,29 @@ final public class JPanelPersonEditor {
 
         this.comboBoxPerson.setSelectedIndex(0);
         this.buttonPersonSelectorDelete.setEnabled(false);
+    }
+
+    private void personSelectorUpdate() {
+        if (this.comboBoxPerson.getSelectedIndex() == 0) return;
+
+        final var person = this.createPersonFromForm();
+        LiveData.updatePersonAt(this.comboBoxPerson.getSelectedIndex() - 1, person);
+
+        // Erase current entry for comboBoxPerson and enter new one organized alphabetically
+        this.comboBoxPerson.removeItemAt(this.comboBoxPerson.getSelectedIndex());
+
+        final int comboBoxSize = this.comboBoxPerson.getItemCount();
+        final String newItem = Person.createNameEntry(person);
+        int iter;
+        for (iter = 1; iter < comboBoxSize; ++iter) {
+            if (this.comboBoxPerson.getItemAt(iter).compareTo(newItem) > 0) {
+                this.comboBoxPerson.insertItemAt(newItem, iter);
+                break;
+            }
+        }
+
+        this.comboBoxPerson.addItem(newItem);
+        this.comboBoxPerson.setSelectedIndex(iter);
     }
 
     // Update the day combo box to reflect the correct number of days for the currently selected month and year
