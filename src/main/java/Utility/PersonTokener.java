@@ -24,6 +24,7 @@ public class PersonTokener {
     private static final String JSON_OBJECT_KEY_PHONE = "PHONE";
     private static final String JSON_OBJECT_KEY_PHONE_AREA_CODE = "PHONE_AREA_CODE";
     private static final String JSON_OBJECT_KEY_PHONE_NUMBER = "PHONE_NUMBER";
+    private static final String JSON_OBJECT_KEY_PHONE_TYPE = "PHONE_TYPE";
 
     public static Person personFromJson(String jsonString) {
         final var person = new Person();
@@ -40,6 +41,7 @@ public class PersonTokener {
         person.setBirthYear(Integer.parseInt(jsonPersonBirthdate.get(JSON_OBJECT_KEY_BIRTH_YEAR).toString()));
 
         final var jsonPersonPhone = (JSONObject) jsonPerson.get(JSON_OBJECT_KEY_PHONE);
+        person.setPhoneType(jsonPersonPhone.get(JSON_OBJECT_KEY_PHONE_TYPE).toString());
         person.setPhoneAreaCode(jsonPersonPhone.get(JSON_OBJECT_KEY_PHONE_AREA_CODE).toString());
         person.setPhoneNumber(jsonPersonPhone.get(JSON_OBJECT_KEY_PHONE_NUMBER).toString());
 
@@ -65,6 +67,7 @@ public class PersonTokener {
         jsonObjectPerson.put(JSON_OBJECT_KEY_BIRTHDATE, jsonObjectPersonBirthdate);
 
         final var jsonObjectPersonPhone = new JSONObject();
+        jsonObjectPersonPhone.put(JSON_OBJECT_KEY_PHONE_TYPE, person.getPhoneType());
         jsonObjectPersonPhone.put(JSON_OBJECT_KEY_PHONE_AREA_CODE, person.getPhoneAreaCode());
         jsonObjectPersonPhone.put(JSON_OBJECT_KEY_PHONE_NUMBER, person.getPhoneNumber());
         jsonObjectPerson.put(JSON_OBJECT_KEY_PHONE, jsonObjectPersonPhone);

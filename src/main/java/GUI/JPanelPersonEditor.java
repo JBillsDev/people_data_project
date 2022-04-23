@@ -19,7 +19,7 @@ final public class JPanelPersonEditor {
 
     private final JCheckBox checkBoxRegisteredForUpdates = new JCheckBox();
     private final JComboBox<Integer> comboBoxBirthDay = new JComboBox<>(), comboBoxBirthYear = new JComboBox<>();
-    private final JComboBox<String> comboBoxBirthMonth = new JComboBox<>();
+    private final JComboBox<String> comboBoxBirthMonth = new JComboBox<>(), comboBoxPhoneType = new JComboBox<>();
     private final JTextField textFieldEmailAddress = new JTextField(20);
     private final JTextField textFieldNameFirst = new JTextField(15), textFieldNameLast = new JTextField(15);
     private final JTextField textFieldPhoneAreaCode = new JTextField(3), textFieldPhoneNumber = new JTextField(8);
@@ -229,9 +229,10 @@ final public class JPanelPersonEditor {
     }
 
     private JPanel createPanelPhoneNumber(Dimension dimensionFormPanelPreferredSizeReference) {
-        final String TEXT_LABEL_PHONE_TITLE = "     Phone";
         final String TEXT_LABEL_PHONE_AREA_CODE = "Area Code: ";
         final String TEXT_LABEL_PHONE_NUMBER = "Number: ";
+        final String TEXT_LABEL_PHONE_TITLE = "     Phone";
+        final String TEXT_LABEL_PHONE_TYPE = "Type: ";
 
         final var panelPhone = new JPanel();
         panelPhone.setPreferredSize(dimensionFormPanelPreferredSizeReference);
@@ -246,6 +247,13 @@ final public class JPanelPersonEditor {
         panelPhone.add(panelPhoneTitle);
 
         final var panelPhoneBody = new JPanel();
+        final var labelPhoneType = new JLabel(TEXT_LABEL_PHONE_TYPE);
+        panelPhoneBody.add(labelPhoneType);
+        this.comboBoxPhoneType.addItem("Home");
+        this.comboBoxPhoneType.addItem("Cell");
+        this.comboBoxPhoneType.addItem("Work");
+        panelPhoneBody.add(this.comboBoxPhoneType);
+
         final var labelPhoneAreaCode = new JLabel(TEXT_LABEL_PHONE_AREA_CODE);
         panelPhoneBody.add(labelPhoneAreaCode);
 
@@ -316,6 +324,7 @@ final public class JPanelPersonEditor {
         this.comboBoxBirthDay.setSelectedIndex(0);
         this.updateDayOfMonth();
 
+        this.comboBoxPhoneType.setSelectedIndex(0);
         this.textFieldPhoneAreaCode.setText("");
         this.textFieldPhoneNumber.setText("");
         this.textFieldEmailAddress.setText("");
@@ -331,7 +340,8 @@ final public class JPanelPersonEditor {
         person.setBirthDate(Integer.parseInt(String.valueOf(this.comboBoxBirthDay.getSelectedItem())),
                 this.comboBoxBirthMonth.getSelectedIndex() + 1,
                 Integer.parseInt(String.valueOf(this.comboBoxBirthYear.getSelectedItem())));
-        person.setPhone(this.textFieldPhoneAreaCode.getText(), this.textFieldPhoneNumber.getText());
+        person.setPhone(this.comboBoxPhoneType.getItemAt(this.comboBoxPhoneType.getSelectedIndex()),
+                        this.textFieldPhoneAreaCode.getText(), this.textFieldPhoneNumber.getText());
         person.setEmailAddress(this.textFieldEmailAddress.getText());
         person.setRegisteredForUpdates(this.checkBoxRegisteredForUpdates.isSelected());
 

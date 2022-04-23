@@ -9,6 +9,7 @@ final public class Person {
 
     private String phoneAreaCode;
     private String phoneNumber;
+    private String phoneType;
 
     private int birthDay;
     private int birthMonth;
@@ -52,6 +53,8 @@ final public class Person {
         return phoneNumber;
     }
 
+    public String getPhoneType() { return phoneType; }
+
     public boolean isRegisteredForUpdates() {
         return registeredForUpdates;
     }
@@ -91,7 +94,8 @@ final public class Person {
         this.nameLast = nameLast;
     }
 
-    public void setPhone(String phoneAreaCode, String phoneNumber) {
+    public void setPhone(String phoneType, String phoneAreaCode, String phoneNumber) {
+        this.setPhoneType(phoneType);
         this.setPhoneAreaCode(phoneAreaCode);
         this.setPhoneNumber(phoneNumber);
     }
@@ -103,6 +107,8 @@ final public class Person {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public void setPhoneType(String phoneType) { this.phoneType = phoneType; }
 
     public void setRegisteredForUpdates(boolean registeredForUpdates) {
         this.registeredForUpdates = registeredForUpdates;

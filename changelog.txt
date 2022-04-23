@@ -1,4 +1,17 @@
 
+		v0.0.11
+	
+	- INTERFACE -
+
+[ADD] PersonEditor phoneType
+	
+	- CODE -
+
+[ADD] Person phoneType
+[ADD] PersonTokener phoneType
+
+
+
 		v0.0.10
 	
 	- CODE -

@@ -5,7 +5,7 @@ import org.tinylog.Logger;
 final public class Main {
 
     public static void main(String[] args) {
-        final String VERSION = "v0.0.10";
+        final String VERSION = "v0.0.11";
         final String TITLE = "People Data Project " + VERSION;
 
         Logger.info(TITLE);
