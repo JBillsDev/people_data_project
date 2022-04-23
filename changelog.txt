@@ -1,4 +1,13 @@
 
+		v0.0.8
+	
+	- CODE -
+
+[ADD] PeopleTokener
+[ADD] PeopleTokener convert person to JSON
+
+
+
 		v0.0.7
 	
 	- INTERFACE -
