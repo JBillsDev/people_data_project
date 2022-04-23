@@ -1,4 +1,22 @@
 
+		v0.0.15
+	
+	- INTERFACE -
+
+[ADD] MenuBar File
+[ADD] MenuFile New, Save, Load, Exit
+
+	- CODE -
+
+[ADD] JFrameWindow added menuBar
+[ADD] JMenuWindowMenuBar
+[ADD] LiveData added final modifier to class
+[ADD] PersonEditor clearAll
+[ADD] PersonEditor comboBoxPersonClear
+[CHANGE] JFrameWindow minimum window size
+
+
+
 		v0.0.14
 	
 	- INTERFACE -

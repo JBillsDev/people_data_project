@@ -3,7 +3,7 @@ package Data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LiveData {
+final public class LiveData {
 
     private final static LiveData INSTANCE = new LiveData();
 
@@ -22,6 +22,10 @@ public class LiveData {
         }
 
         INSTANCE.personArray.add(person);
+    }
+
+    public static void clearData() {
+        INSTANCE.personArray.clear();
     }
 
     public static Person getPersonAt(int index) {

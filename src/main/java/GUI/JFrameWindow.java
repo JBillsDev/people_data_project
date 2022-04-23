@@ -13,7 +13,7 @@ final public class JFrameWindow extends JFrame  {
     public JFrameWindow(String windowTitle, Config configReference) {
         final var config = configReference;
 
-        final Dimension dimensionWindowMinimumSize = new Dimension(480, 335);
+        final Dimension dimensionWindowMinimumSize = new Dimension(480, 358);
 
         this.setTitle(windowTitle);
         this.setMinimumSize(dimensionWindowMinimumSize);
@@ -51,6 +51,8 @@ final public class JFrameWindow extends JFrame  {
 
         final var jPanelPersonEditor = new JPanelPersonEditor();
         this.add(jPanelPersonEditor.getPanelRoot());
+
+        this.setJMenuBar(new JMenuWindowMenuBar(jPanelPersonEditor));
 
         this.setVisible(true);
         Logger.info("JFrameWindow (" + windowTitle + ") initialized");

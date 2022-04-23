@@ -49,6 +49,11 @@ final public class JPanelPersonEditor {
         this.panelRoot.add(panelForm);
     }
 
+    public void clearAll() {
+        this.formClear();
+        this.comboBoxPersonClear();
+    }
+
     private void comboBoxPersonAdd(Person person) {
         final int comboBoxSize = this.comboBoxPerson.getItemCount();
         final String newItem = Person.createNameEntry(person);
@@ -60,6 +65,12 @@ final public class JPanelPersonEditor {
         }
 
         this.comboBoxPerson.addItem(newItem);
+    }
+
+    private void comboBoxPersonClear() {
+        while (this.comboBoxPerson.getItemCount() > 1) {
+            this.comboBoxPerson.removeItemAt(1);
+        }
     }
 
     private JPanel createPanelDateOfBirth(Dimension dimensionFormPanelPreferredSizeReference) {
