@@ -4,18 +4,20 @@ import Utility.Config;
 import org.tinylog.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 final public class JFrameWindow extends JFrame  {
 
-    Config configReference;
-
     public JFrameWindow(String windowTitle, Config configReference) {
-        this.configReference = configReference;
+        final var config = configReference;
+
+        final Dimension dimensionWindowMinimumSize = new Dimension(480, 358);
 
         this.setTitle(windowTitle);
-        this.setBounds(this.configReference.getWindowRect());
+        this.setMinimumSize(dimensionWindowMinimumSize);
+        this.setBounds(config.getWindowRect());
         // Set the program to stop running when the window's 'X' is clicked
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -25,11 +27,11 @@ final public class JFrameWindow extends JFrame  {
             public void componentResized(ComponentEvent event) {
                 super.componentResized(event);
 
-                configReference.updateWindowDimensions(event.getComponent().getWidth(),
+                config.updateWindowDimensions(event.getComponent().getWidth(),
                                                        event.getComponent().getHeight());
-                configReference.updateWindowPosition(event.getComponent().getX(),
+                config.updateWindowPosition(event.getComponent().getX(),
                                                      event.getComponent().getY());
-                configReference.writeConfig();
+                config.writeConfig();
             }
         });
 
@@ -39,13 +41,18 @@ final public class JFrameWindow extends JFrame  {
             public void componentMoved(ComponentEvent event) {
                 super.componentMoved(event);
 
-                configReference.updateWindowDimensions(event.getComponent().getWidth(),
+                config.updateWindowDimensions(event.getComponent().getWidth(),
                         event.getComponent().getHeight());
-                configReference.updateWindowPosition(event.getComponent().getX(),
+                config.updateWindowPosition(event.getComponent().getX(),
                         event.getComponent().getY());
-                configReference.writeConfig();
+                config.writeConfig();
             }
         });
+
+        final var jPanelPersonEditor = new JPanelPersonEditor();
+        this.add(jPanelPersonEditor.getPanelRoot());
+
+        this.setJMenuBar(new JMenuWindowMenuBar(jPanelPersonEditor));
 
         this.setVisible(true);
         Logger.info("JFrameWindow (" + windowTitle + ") initialized");

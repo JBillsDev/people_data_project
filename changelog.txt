@@ -1,4 +1,216 @@
 
+		v0.0.16
+	
+	- CODE -
+
+[ADD] MenuBar File Save saves LiveData to json file
+[ADD] MenuBar File Load clears current LiveData and PersonEditor listings, then loads from json file
+[ADD] PersonEditor generatePersonEditorListing
+
+
+
+		v0.0.15
+	
+	- INTERFACE -
+
+[ADD] MenuBar File
+[ADD] MenuFile New, Save, Load, Exit
+
+	- CODE -
+
+[ADD] JFrameWindow added menuBar
+[ADD] JMenuWindowMenuBar
+[ADD] LiveData added final modifier to class
+[ADD] PersonEditor clearAll
+[ADD] PersonEditor comboBoxPersonClear
+[CHANGE] JFrameWindow minimum window size
+
+
+
+		v0.0.14
+	
+	- INTERFACE -
+
+[ADD] PersonEditor Update button
+[CHANGE] PersonEditor moved Submit button left of person selector
+
+	- CODE -
+
+[ADD] LiveData updatePersonAt
+[ADD] Person copy constructor
+[ADD] PersonEditor createPersonFromForm
+
+
+
+		v0.0.13
+	
+	- INTERFACE -
+
+[ADD] PersonEditor personSelector remove
+
+	- CODE -
+
+[ADD] LiveData removePersonAt
+[ADD] Person createNameEntry
+[CHANGE] LiveData addPerson sorts by nameEntry
+[CHANGE] LiveData personArray to type List from ArrayList
+[REMOVE] LiveData personArray getSize
+
+
+
+		v0.0.12
+		
+	- INTERFACE -
+
+[ADD] PersonEditor person selector combo box
+[ADD] PersonEditor personSelector sorts alphabetically
+
+
+
+		v0.0.11
+	
+	- INTERFACE -
+
+[ADD] PersonEditor phoneType
+	
+	- CODE -
+
+[ADD] Person phoneType
+[ADD] PersonTokener phoneType
+
+
+
+		v0.0.10
+	
+	- CODE -
+
+[ADD] LiveData singleton class storing data during program lifetime
+[ADD] LiveData personArray
+[ADD] LiveData personArray addPerson
+[ADD] LiveData personArray getPersonCount
+[ADD] LiveData personArray getPerson
+
+
+
+		v0.0.9
+	
+	- CODE -
+
+[ADD] PeopleTokener convert person from JSON
+[CHANGE] PeopleTokener made local vars final
+[CHANGE] PeopleTokener renamed to PersonTokener
+
+
+
+		v0.0.8
+	
+	- CODE -
+
+[ADD] PeopleTokener
+[ADD] PeopleTokener convert person to JSON
+
+
+
+		v0.0.7
+	
+	- INTERFACE -
+
+[CHANGE] Window minimum size
+
+
+
+		v0.0.6
+	
+	- INTERFACE -
+
+[ADD] PersonEditor form clears when successfully submitted
+	
+	- CODE -
+
+[ADD] Person getters and setters
+[ADD] PersonEditor create instance of Person when form successfully submitted
+[ADD] Data package
+[CHANGE] Person moved to package Data
+
+
+
+		v0.0.5
+	
+	- INTERFACE -
+
+[ADD] PersonEditor form submission button
+
+	- CODE -
+
+[CHANGE] PersonEditor renamed shorthand lambda e's to event
+[FIX] PersonEditor amended email check to require character(s) between' @' and '.com'
+[FIX] PersonEditor amended email to prevent spacebar
+[FIX] PersonEditor amended phone check to require exact number of digits for area code and number
+[FIX] PersonEditor amended phone check to prevent space bar from adding hyphen without 4th digit being entered
+[FIX] PersonEditor amended phone number entry to move caret to end of number when adding digit
+
+
+
+		v0.0.4
+
+	- CODE -
+
+[ADD] PersonEditor check to prevent crash during initialization
+[ADD] PersonEditor comments
+[CHANGE] Main converted a variable to final
+[CHANGE] Config moved several final variables to local scope
+[CHANGE] Config updated access modifiers for member variables
+[CHANGE] JFrameWindow changed members to local final variables
+[CHANGE] PersonEditor string literals moved to local scopes
+[CHANGE] PersonEditor changed scope of most variables
+[CHANGE] PersonEditor reorganized comments
+
+
+
+		v0.0.3
+
+	- INTERFACE -
+
+[CHANGE] PersonEditor name fields only accept letters a hyphen
+[CHANGE] PersonEditor names are limited to 12 characters
+[CHANGE] PersonEditor area code is limited to 3 digits
+[CHANGE] PersonEditor phone number is limited to 7 digits and hyphen
+[CHANGE] PersonEditor phone number automatically adds and removes hyphen
+
+	- CODE -
+
+[ADD] PersonEditor check to ensure email isn't empty, and contains '@' and ends in '.com'
+[ADD] PersonEditor check to ensure name entries aren't empty
+[ADD] PersonEditor check to ensure phone number and area code are correct length
+[ADD] PersonEditor check to ensure form is correctly filled out
+
+
+
+		v0.0.2
+	
+	- INTERFACE -
+
+[ADD] PersonEditor email entry
+[CHANGE] PersonEditor phone entry alignment
+
+
+
+		v0.0.1
+	
+	- INTERFACE -
+	
+[ADD] PersonEditor form
+[ADD] PersonEditor name entry
+[ADD] PersonEditor birthdate entry
+[ADD] PersonEditor phone entry
+		
+	- CODE -
+
+[ADD] Data.Person pojo
+[ADD] PersonEditor DOB day respects valid dates of calendar years
+
+
+
 		v0.0.0b
 	
 	- INTERFACE -

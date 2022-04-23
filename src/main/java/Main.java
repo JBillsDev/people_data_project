@@ -5,12 +5,12 @@ import org.tinylog.Logger;
 final public class Main {
 
     public static void main(String[] args) {
-        final String VERSION = "v0.0.0b";
+        final String VERSION = "v0.0.16";
         final String TITLE = "People Data Project " + VERSION;
 
         Logger.info(TITLE);
 
-        var config = new Config();
+        final var config = new Config();
         config.readConfig();
 
         new JFrameWindow(TITLE, config);

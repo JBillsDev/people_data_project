@@ -10,44 +10,42 @@ import java.io.*;
 
 final public class Config {
 
-    final String CONFIG_FILE_NAME = "config.txt";
+    private final String CONFIG_FILE_NAME = "config.txt";
 
-    final String JSON_OBJECT_KEY_WINDOW = "WINDOW";
-    final String JSON_OBJECT_KEY_WINDOW_DIMENSIONS = "WINDOW_DIMENSIONS";
-    final String JSON_OBJECT_KEY_WINDOW_DIMENSIONS_WIDTH = "WINDOW_WIDTH";
-    final String JSON_OBJECT_KEY_WINDOW_DIMENSIONS_HEIGHT = "WINDOW_HEIGHT";
-    final String JSON_OBJECT_KEY_WINDOW_POSITION = "WINDOW_POSITION";
-    final String JSON_OBJECT_KEY_WINDOW_POSITION_X = "WINDOW_POSITION_X";
-    final String JSON_OBJECT_KEY_WINDOW_POSITION_Y = "WINDOW_POSITION_Y";
+    private final String JSON_OBJECT_KEY_WINDOW_DIMENSIONS = "WINDOW_DIMENSIONS";
+    private final String JSON_OBJECT_KEY_WINDOW_DIMENSIONS_WIDTH = "WINDOW_WIDTH";
+    private final String JSON_OBJECT_KEY_WINDOW_DIMENSIONS_HEIGHT = "WINDOW_HEIGHT";
+    private final String JSON_OBJECT_KEY_WINDOW_POSITION = "WINDOW_POSITION";
+    private final String JSON_OBJECT_KEY_WINDOW_POSITION_X = "WINDOW_POSITION_X";
+    private final String JSON_OBJECT_KEY_WINDOW_POSITION_Y = "WINDOW_POSITION_Y";
 
-    final int WINDOW_WIDTH_DEFAULT = 480;
-    final int WINDOW_HEIGHT_DEFAULT = 640;
-
-    JSONObject JSONObjectConfig;
-    JSONObject JSONObjectConfigWindow;
-    JSONObject JSONObjectConfigWindowDimensions;
-    JSONObject JSONObjectConfigWindowPosition;
+    private final JSONObject JSONObjectConfig;
+    private final JSONObject JSONObjectConfigWindowDimensions;
+    private final JSONObject JSONObjectConfigWindowPosition;
 
     public Config() {
+        final int WINDOW_WIDTH_DEFAULT = 480;
+        final int WINDOW_HEIGHT_DEFAULT = 640;
+
         // Instantiate JSON Objects
         this.JSONObjectConfig = new JSONObject();
-        this.JSONObjectConfigWindow = new JSONObject();
+        final var JSONObjectConfigWindow = new JSONObject();
         this.JSONObjectConfigWindowDimensions = new JSONObject();
         this.JSONObjectConfigWindowPosition = new JSONObject();
 
         // Set default window dimensions
-        this.updateWindowDimensions(this.WINDOW_WIDTH_DEFAULT, this.WINDOW_HEIGHT_DEFAULT);
+        this.updateWindowDimensions(WINDOW_WIDTH_DEFAULT, WINDOW_HEIGHT_DEFAULT);
 
         // Set default window position to center of the screen
         Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
-        var windowPositionX = (screenDimensions.width / 2)  - (this.WINDOW_WIDTH_DEFAULT / 2);
-        var windowPositionY = (screenDimensions.height / 2) - (this.WINDOW_HEIGHT_DEFAULT / 2);
+        final var windowPositionX = (screenDimensions.width / 2)  - (WINDOW_WIDTH_DEFAULT / 2);
+        final var windowPositionY = (screenDimensions.height / 2) - (WINDOW_HEIGHT_DEFAULT / 2);
         this.updateWindowPosition(windowPositionX, windowPositionY);
 
         // Build JSON Object
-        this.JSONObjectConfigWindow.put(this.JSON_OBJECT_KEY_WINDOW_DIMENSIONS, this.JSONObjectConfigWindowDimensions);
-        this.JSONObjectConfigWindow.put(this.JSON_OBJECT_KEY_WINDOW_POSITION, this.JSONObjectConfigWindowPosition);
-        this.JSONObjectConfig.put("WINDOW", this.JSONObjectConfigWindow);
+        JSONObjectConfigWindow.put(this.JSON_OBJECT_KEY_WINDOW_DIMENSIONS, this.JSONObjectConfigWindowDimensions);
+        JSONObjectConfigWindow.put(this.JSON_OBJECT_KEY_WINDOW_POSITION, this.JSONObjectConfigWindowPosition);
+        this.JSONObjectConfig.put("WINDOW", JSONObjectConfigWindow);
     }
 
     public Rectangle getWindowRect() {
@@ -58,7 +56,7 @@ final public class Config {
     }
 
     public void readConfig() {
-        File configFile = new File(this.CONFIG_FILE_NAME);
+        final File configFile = new File(this.CONFIG_FILE_NAME);
         // Create the default config file if one does not exist, and maintain default config values
         if (!configFile.exists()) {
             this.writeConfig();
@@ -66,9 +64,9 @@ final public class Config {
         }
 
         // Read JSON file and convert it to a single string to convert into JSON object
-        JSONTokener jsonTokenizer;
+        final JSONTokener jsonTokenizer;
         try {
-            var bufferedReader = new BufferedReader(new FileReader(this.CONFIG_FILE_NAME));
+            final var bufferedReader = new BufferedReader(new FileReader(this.CONFIG_FILE_NAME));
             String bufferedReaderLineNext;
             StringBuilder builder = new StringBuilder();
             while ((bufferedReaderLineNext = bufferedReader.readLine()) != null) {
@@ -87,14 +85,16 @@ final public class Config {
 
         // Attempt to parse config file JSON
         try {
-            var jsonObjectConfigFile = new JSONObject(jsonTokenizer);
+            final String JSON_OBJECT_KEY_WINDOW = "WINDOW";
 
-            var jsonObjectConfigFileWindow = (JSONObject) jsonObjectConfigFile.get(this.JSON_OBJECT_KEY_WINDOW);
-            var jsonObjectConfigFileWindowDimensions = (JSONObject) jsonObjectConfigFileWindow.get(this.JSON_OBJECT_KEY_WINDOW_DIMENSIONS);
+            final var jsonObjectConfigFile = new JSONObject(jsonTokenizer);
+
+            final var jsonObjectConfigFileWindow = (JSONObject) jsonObjectConfigFile.get(JSON_OBJECT_KEY_WINDOW);
+            final var jsonObjectConfigFileWindowDimensions = (JSONObject) jsonObjectConfigFileWindow.get(this.JSON_OBJECT_KEY_WINDOW_DIMENSIONS);
             this.updateWindowDimensions(jsonObjectConfigFileWindowDimensions.getInt(this.JSON_OBJECT_KEY_WINDOW_DIMENSIONS_WIDTH),
                                         jsonObjectConfigFileWindowDimensions.getInt(this.JSON_OBJECT_KEY_WINDOW_DIMENSIONS_HEIGHT));
 
-            var jsonObjectConfigFileWindowPosition = (JSONObject) jsonObjectConfigFileWindow.get(this.JSON_OBJECT_KEY_WINDOW_POSITION);
+            final var jsonObjectConfigFileWindowPosition = (JSONObject) jsonObjectConfigFileWindow.get(this.JSON_OBJECT_KEY_WINDOW_POSITION);
             this.updateWindowPosition(jsonObjectConfigFileWindowPosition.getInt(this.JSON_OBJECT_KEY_WINDOW_POSITION_X),
                                       jsonObjectConfigFileWindowPosition.getInt(this.JSON_OBJECT_KEY_WINDOW_POSITION_Y));
         } catch (JSONException exception) {
@@ -118,7 +118,7 @@ final public class Config {
 
     public void writeConfig() {
         try {
-            var configFile = new File(this.CONFIG_FILE_NAME);
+            final var configFile = new File(this.CONFIG_FILE_NAME);
             if (configFile.exists()) {
                 if (!configFile.delete()) {
                     Logger.warn("failed to delete config");
@@ -126,7 +126,7 @@ final public class Config {
             }
 
             if (configFile.createNewFile()) {
-                var fileWriter = new FileWriter(configFile);
+                final var fileWriter = new FileWriter(configFile);
                 fileWriter.write(JSONObjectConfig.toString(3));
                 fileWriter.close();
             }
