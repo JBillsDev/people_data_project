@@ -21,6 +21,10 @@ final public class Person {
 
     }
 
+    public static String createNameEntry(Person person) {
+        return (person.getNameLast() + ", " + person.getNameFirst());
+    }
+
     public int getBirthDay() {
         return birthDay;
     }

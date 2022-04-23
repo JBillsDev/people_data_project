@@ -1,4 +1,20 @@
 
+		v0.0.13
+	
+	- INTERFACE -
+
+[ADD] PersonEditor personSelector remove
+
+	- CODE -
+
+[ADD] LiveData removePersonAt
+[ADD] Person createNameEntry
+[CHANGE] LiveData addPerson sorts by nameEntry
+[CHANGE] LiveData personArray to type List from ArrayList
+[REMOVE] LiveData personArray getSize
+
+
+
 		v0.0.12
 		
 	- INTERFACE -
