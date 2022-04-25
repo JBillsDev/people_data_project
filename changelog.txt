@@ -1,4 +1,33 @@
 
+		v0.1.1
+	
+	- CODE -
+
+[ADD] LiveData getPersonArraySize
+[CHANGE] LiveData addPerson to addPersonLastNameAlphabetically
+	
+	- UNIT TESTING -
+
+[ADD] LiveDataTest
+[ADD] PersonTestInheritable createPerson
+
+
+
+		v0.1.0
+		
+	- CODE -
+
+[CHANGE] PersonTokener class now final
+	
+	- UNIT TESTING -
+
+[ADD] JUnit
+[ADD] PersonTest
+[ADD] PersonTestInheritable
+[ADD] PersonTokenerTest
+
+
+
 		v0.0.16
 	
 	- CODE -
