@@ -25,7 +25,7 @@ final public class Config {
 
     public Config() {
         final int WINDOW_WIDTH_DEFAULT = 480;
-        final int WINDOW_HEIGHT_DEFAULT = 640;
+        final int WINDOW_HEIGHT_DEFAULT = 358;
 
         // Instantiate JSON Objects
         this.JSONObjectConfig = new JSONObject();

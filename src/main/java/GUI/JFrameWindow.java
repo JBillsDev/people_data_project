@@ -17,7 +17,9 @@ final public class JFrameWindow extends JFrame  {
 
         this.setTitle(windowTitle);
         this.setMinimumSize(dimensionWindowMinimumSize);
+        this.setMaximumSize(dimensionWindowMinimumSize);
         this.setBounds(config.getWindowRect());
+        this.setResizable(false);
         // Set the program to stop running when the window's 'X' is clicked
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 

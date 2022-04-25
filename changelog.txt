@@ -1,4 +1,13 @@
 
+		v1.0.3
+	
+	- CODE -
+
+[CHANGE] Window no longer resizable
+[CHANGE] Window set max size to min size
+
+
+
 		v1.0.2
 	
 	- MISC -
