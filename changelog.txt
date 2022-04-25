@@ -1,4 +1,18 @@
 
+		v1.0.0
+	
+	- MISC -
+
+[ADD] project images
+[CHANGE] README updated
+
+	- CODE -
+
+[ADD] PersonEditor log info when submitting, deleting and removing people to/from list
+[FIX] PersonEditor now correctly updates day of birth when selecting person in list
+
+
+
 		v0.1.1
 	
 	- CODE -
