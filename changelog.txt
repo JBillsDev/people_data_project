@@ -1,4 +1,12 @@
 
+		v1.0.2
+	
+	- MISC -
+
+[FIX] readme photo urls
+
+
+
 		v1.0.1
 	
 	- MISC -
