@@ -6,6 +6,7 @@ A small application that allows addition, editting, and removal of people into a
 
 ## Project Highlights
 
+	* Maven
 	* Swing
 	* JUnit testing
 	* JSON with json.simple
