@@ -20,7 +20,7 @@ final public class LiveData {
 
     private LiveData() {}
 
-    public static void addPerson(Person person) {
+    public static void addPersonLastNameAlphabetized(Person person) {
         final String newEntry = Person.createNameEntry(person);
         final int personArraySize = INSTANCE.personArray.size();
         for (int iter = 0; iter < personArraySize; ++iter) {
@@ -35,6 +35,10 @@ final public class LiveData {
 
     public static void clearData() {
         INSTANCE.personArray.clear();
+    }
+
+    public static int getPersonArraySize() {
+        return INSTANCE.personArray.size();
     }
 
     public static Person getPersonAt(int index) {
@@ -123,7 +127,7 @@ final public class LiveData {
         if (index >= INSTANCE.personArray.size()) return;
 
         INSTANCE.personArray.remove(index);
-        addPerson(person);
+        addPersonLastNameAlphabetized(person);
     }
 
 }

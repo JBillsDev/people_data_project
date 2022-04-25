@@ -1,4 +1,18 @@
 
+		v0.1.1
+	
+	- CODE -
+
+[ADD] LiveData getPersonArraySize
+[CHANGE] LiveData addPerson to addPersonLastNameAlphabetically
+	
+	- UNIT TESTING -
+
+[ADD] LiveDataTest
+[ADD] PersonTestInheritable createPerson
+
+
+
 		v0.1.0
 		
 	- CODE -

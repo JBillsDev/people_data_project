@@ -425,7 +425,7 @@ final public class JPanelPersonEditor {
         var person = this.createPersonFromForm();
 
         // Add newly created person to the live database and the person-selector combo box
-        LiveData.addPerson(person);
+        LiveData.addPersonLastNameAlphabetized(person);
         this.comboBoxPersonAdd(person);
 
         this.formClear();
