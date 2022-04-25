@@ -4,7 +4,7 @@ import Data.Person;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class PersonTokener {
+final public class PersonTokener {
 
     private static final String JSON_OBJECT_KEY = "PERSON";
 
