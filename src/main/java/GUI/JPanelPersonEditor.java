@@ -2,6 +2,7 @@ package GUI;
 
 import Data.LiveData;
 import Data.Person;
+import org.tinylog.Logger;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -392,8 +393,8 @@ final public class JPanelPersonEditor {
 
         this.comboBoxBirthYear.setSelectedItem(person.getBirthYear());
         this.comboBoxBirthMonth.setSelectedIndex(person.getBirthMonth() - 1);
-        this.comboBoxBirthDay.setSelectedItem(person.getBirthDay());
         this.updateDayOfMonth();
+        this.comboBoxBirthDay.setSelectedItem(person.getBirthDay());
 
         this.comboBoxPhoneType.setSelectedItem(person.getPhoneType());
         this.textFieldPhoneAreaCode.setText(person.getPhoneAreaCode());
@@ -429,6 +430,8 @@ final public class JPanelPersonEditor {
         this.comboBoxPersonAdd(person);
 
         this.formClear();
+
+        Logger.info("Submitted: " + person);
     }
 
     // Populate ComboBoxPerson with people in LiveData
@@ -463,6 +466,8 @@ final public class JPanelPersonEditor {
     private void personSelectorDelete() {
         if (this.comboBoxPerson.getSelectedIndex() == 0) return;
 
+        Logger.info("Deleting: " + LiveData.getPersonAt(this.comboBoxPerson.getSelectedIndex() - 1));
+
         LiveData.removePersonAt(this.comboBoxPerson.getSelectedIndex() - 1);
         this.comboBoxPerson.removeItemAt(this.comboBoxPerson.getSelectedIndex());
 
@@ -474,6 +479,9 @@ final public class JPanelPersonEditor {
         if (this.comboBoxPerson.getSelectedIndex() == 0) return;
 
         final var person = this.createPersonFromForm();
+
+        Logger.info("Updating: " + LiveData.getPersonAt(this.comboBoxPerson.getSelectedIndex() - 1) + " to " + person);
+
         LiveData.updatePersonAt(this.comboBoxPerson.getSelectedIndex() - 1, person);
 
         // Erase current entry for comboBoxPerson and enter new one organized alphabetically
