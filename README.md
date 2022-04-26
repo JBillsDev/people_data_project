@@ -2,7 +2,7 @@
 
 ## Portfolio Item for JBillsDev
 
-A small application that allows addition, editting, and removal of people into a live database. Database is able to be saved to and loaded from a single file, the name of which is coded into the application.
+A small application that allows addition, editting, and removal of people into a list that is able to be saved to and loaded from a single file, the name of which is coded into the application.
 
 ## Project Highlights
 
